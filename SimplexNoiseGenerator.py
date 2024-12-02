@@ -29,7 +29,7 @@ if __name__ == '__main__':
 def imageGenerator(seed_start,seed_range):
     """
     Generates a files containing OpenSimplex image training data.
-    The file 'training.data' will contain the images for training sequentially in byte format.
+    The file 'training.data' will contain the images for training sequentially in binary format, 8 byte per pixel.
     The file 'label.label' will contain the labels of the images.
     @params
         seed_start (Integer): The start of the seed range
@@ -56,8 +56,8 @@ def imageGenerator(seed_start,seed_range):
         for x in range(size):
             for y in range(size):
                 
-                data = (opensimplex.noise2(x/10,y/10)+1)/2 #Convert the OpenSimplex range of [-1,1] to [0:255] to store.
-                memoryBuffer+=data.tobytes() #Only store the luminescence of the image, not RGB value.
+                data = (opensimplex.noise2(x/10,y/10)+1)/2 #Convert the OpenSimplex range of [-1,1] to [0:1] to store.
+                memoryBuffer+=data.tobytes() #Only store the luminescence of the image in float64, not RGB value.
         
         #append the image into the data file, and reset the buffer.
         outfile.write(memoryBuffer) 
