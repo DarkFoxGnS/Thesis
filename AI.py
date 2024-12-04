@@ -1,7 +1,7 @@
 #Only execute when the file is executed directly
 if __name__ == "__main__":
  
-##################################
+    ##################################
     #Default parameters
     map_size = 64
     learning_curve = 0.001
@@ -41,9 +41,7 @@ if __name__ == "__main__":
         learning_curve = args.lr
 
     #Manage imports
-    from torch import nn
     import time
-    from torch.utils.data import Dataset, DataLoader
     import numpy as np
     import torch
     from PIL import Image
@@ -52,8 +50,9 @@ if __name__ == "__main__":
     
     #Create time to measure execution time
     start_timer = time.time()
-    
 
+from torch.utils.data import Dataset, DataLoader
+from torch import nn
 class SimplexModel(nn.Module):
     """
     This is a subclass of the Torch.nn.Module.

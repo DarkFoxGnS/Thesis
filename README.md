@@ -6,6 +6,8 @@ Thesis for IU University of Applied Sciences
 [Dependencies](#dependencies)  
 [OpenSimplex Noise](#opensimplex-noise)  
 [Worley Noise](#worley-noise)  
+[Artificial Intelligence](#artificial-intelligence)  
+[Models](#models)
 
 ## Dependencies
 For the project to fully function, the following packages are required.  
@@ -44,11 +46,24 @@ These files will be generated into the same directory as [Worley.py](./Worley.py
 `Worley.data` contains the luminescence of the images in a binary format with each value being a 64-bit float written sequentially, where each image consists of 262,144 bits or 32 KB.  
 `Worley.label` contains the respective labels (seeds) of the images written sequentially separated via `;`.
 
-## AI
+## Artificial Intelligence
 AI can be trained by executing
 
 ## Models
-The models included in the repository are stored in the folders named in the scheme `<TYPE>_model_<SEED_SIZE>` where  
-`TYPE` describes the type of the model, it can be either `w` for Worley or `os` for OpenSimpex.  
+The models included in the repository are stored in the folders named in the scheme `<NOISE>_model_<SEED_SIZE>_<TYPE>` where  
+`NOISE` describes the type of the noise which was used to train the model, it can be either `w` for Worley or `os` for OpenSimpex.  
 `SEED_SIZE` describes the ammount of bits used for the seeds.  
+`TYPE` describes the type of model, it can be either `nn` for Neural Network or `gan` for Generative Adversarial Network.  
 For example the folder `w_model_8` contains a model trained on **Worley** noise with the seed range of 2<sup>**8**</sup>=255.
+
+### OpenSimplex models
+[Model with 8-bit seed](./os_model_8/)
+[Model with 10-bit seed](./os_model_10/)
+[Model with 12-bit seed](./os_model_12/)
+[Model with 16-bit seed](./os_model_16/)
+
+### Worley models
+[Model with 8-bit seed](./w_model_8/)
+[Model with 10-bit seed](./w_model_10/)
+[Model with 12-bit seed](./w_model_12/)
+[Model with 16-bit seed](./w_model_16/)
