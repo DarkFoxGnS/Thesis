@@ -1,6 +1,4 @@
 .git/
 __pycache__/
-*.data 
-*.settings 
-*.stat 
+*.data
 *.label 
