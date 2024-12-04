@@ -1,5 +1,4 @@
-pylab
-pythonworley
 PIL
+pythonworley
 opensimplex
 torch

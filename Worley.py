@@ -26,8 +26,8 @@ if __name__ == "__main__":
 def imageGenerator(seedStart,seedRange):
     """
     Generates a files containing Worley image training data.
-    The file 'w_training.data' will contain the images for training sequentially in binary format, 8 byte per pixel.
-    The file 'w_label.label' will contain the labels of the images.
+    The file 'Worley.data' will contain the images for training sequentially in binary format, 8 byte per pixel.
+    The file 'Worley.label' will contain the labels of the images.
     @params
         seed_start (Integer): The start of the seed range.
         seed_range (Integer): The range of the seed range, relative to the start.
@@ -36,8 +36,8 @@ def imageGenerator(seedStart,seedRange):
         imageGenerator(100,200) -> Generates images with seed range of 100 to 300.
     
     """
-    labelfile = open(f"w_label.label","w")
-    outfile = open(f"w_training.data","wb")
+    labelfile = open(f"Worley.label","w")
+    outfile = open(f"Worley.data","wb")
     dataBuffer = b''
     labelBuffer = ""
     

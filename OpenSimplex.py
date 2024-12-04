@@ -29,8 +29,8 @@ if __name__ == '__main__':
 def imageGenerator(seed_start,seed_range):
     """
     Generates a files containing OpenSimplex image training data.
-    The file 'os_training.data' will contain the images for training sequentially in binary format, 8 byte per pixel.
-    The file 'os_label.label' will contain the labels of the images.
+    The file 'OpenSimplex.data' will contain the images for training sequentially in binary format, 8 byte per pixel.
+    The file 'Opensimplex.label' will contain the labels of the images.
     @params
         seed_start (Integer): The start of the seed range.
         seed_range (Integer): The range of the seed range, relative to the start.
@@ -44,8 +44,8 @@ def imageGenerator(seed_start,seed_range):
     memoryBuffer = b""
     
     #open and create label and data files.
-    labelfile = open(f"os_label.label","w")
-    outfile = open(f"os_training.data","wb")
+    labelfile = open(f"OpenSimplex.label","w")
+    outfile = open(f"OpenSimplex.data","wb")
     
     #iterate through the seeds, set the seed if the generator, save the seed to the label file.
     for seed in range(seed_start,seed_start+seed_range):
