@@ -1,0 +1,5 @@
+Epoch count = 200
+Batch size = 16
+Learning curve = 0.001
+Average training time = 2.1749218881130217
+Lowest observed loss = 0.005803633015602827
