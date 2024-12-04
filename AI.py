@@ -339,7 +339,7 @@ def main():
         loss = training(model,dataloader,loss_func,optimizer) #Train the model
         
         print(f"Done in {time.time()-section_timer} seconds\n")
-        training_time += section_timer
+        training_time += time.time()-section_timer
         section_timer = time.time()
         
         if over_all_lowest_loss > loss:
@@ -369,7 +369,7 @@ def main():
     section_timer = time.time()
     
     #Save the parameters used during training.
-    settingsFile = open(f"{working_dirctory}\\{model_name}_{start_timer}.settings","w")
+    settingsFile = open(f"{working_dirctory}\\{model_name}.settings","w")
     settingsFile.write(f"Epoch count = {epoch_count}\n")
     settingsFile.write(f"Batch size = {batch_size}\n")
     settingsFile.write(f"Learning curve = {learning_curve}\n")
