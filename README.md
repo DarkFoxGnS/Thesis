@@ -54,16 +54,16 @@ The models included in the repository are stored in the folders named in the sch
 `NOISE` describes the type of the noise which was used to train the model, it can be either `w` for Worley or `os` for OpenSimpex.  
 `SEED_SIZE` describes the ammount of bits used for the seeds.  
 `TYPE` describes the type of model, it can be either `nn` for Neural Network or `gan` for Generative Adversarial Network.  
-For example the folder `w_model_8` contains a model trained on **Worley** noise with the seed range of 2<sup>**8**</sup>=255.
+For example the folder `w_model_8_nn` contains a **Neural Network** model trained on **Worley** noise with the seed range of 2<sup>**8**</sup>=255.
 
 ### OpenSimplex models
-[Model with 8-bit seed](./os_model_8/)
-[Model with 10-bit seed](./os_model_10/)
-[Model with 12-bit seed](./os_model_12/)
-[Model with 16-bit seed](./os_model_16/)
+[Neural Network Model with 8-bit seed](./os_model_8_nn/)  
+[Neural Network Model with 10-bit seed](./os_model_10_nn/)  
+[Neural Network Model with 12-bit seed](./os_model_12_nn/)  
+[Neural Network Model with 16-bit seed](./os_model_16_nn/)  
 
 ### Worley models
-[Model with 8-bit seed](./w_model_8/)
-[Model with 10-bit seed](./w_model_10/)
-[Model with 12-bit seed](./w_model_12/)
-[Model with 16-bit seed](./w_model_16/)
+[Neural Network Model with 8-bit seed](./w_model_8_nn/)  
+[Neural Network Model with 10-bit seed](./w_model_10_nn/)  
+[Neural Network Model with 12-bit seed](./w_model_12_nn/)  
+[Neural Network Model with 16-bit seed](./w_model_16_nn/)  
