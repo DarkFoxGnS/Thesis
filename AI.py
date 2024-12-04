@@ -21,9 +21,6 @@ if __name__ == "__main__":
     parser.add_argument("-dir",type=str,help="Location of the model, will use name of the model as the directory by default.")
     parser.add_argument("-batch",type=int,help="Bach size, defaults to 64.")
     parser.add_argument("-epoch",type=int,help="Epoch size, defaults to 10.")
-    parser.add_argument("-train",action='store_true',help="Set it to true for training.")
-    parser.add_argument("-test",action='store_true',help="Set it to true for testing.")
-    parser.add_argument("-imgtest",type=int,help="Seed required to get an output on, from 0 to 65536.")
     parser.add_argument("-device",type=str,help="Which device to use, \"cpu\" for CPU based usage, cuda for \"GPU based usage\"")
     parser.add_argument("-lr",type=float,help="The learning curve of the model or training. Default 0.001")
 
@@ -295,7 +292,6 @@ def main():
     Main function.
     """
     #Create a section_timer that is used to measure the performance during training, and testing.
-    global start_timer
     section_timer = start_timer
     
     #Get the data and label files.
@@ -332,75 +328,56 @@ def main():
     
     loss_func = nn.MSELoss()#Define the loss function.
     
-    #Executed if the -train switch was passed.
-    if args.train:
+    optimizer = torch.optim.Adam(model.linear_relu_stack.parameters(), learning_curve)#Create the optimizer.
+    
+    #Create variables to keep track of training time and the overall measured lowest loss.
+    training_time = 0
+    over_all_lowest_loss = math.inf
+    
+    #Execute training based on the given epoch count.
+    for epoch in range(epoch_count):
+        print(f"Starting epoch {epoch}")
+        loss = training(model,dataloader,loss_func,optimizer) #Train the model
         
-        optimizer = torch.optim.Adam(model.linear_relu_stack.parameters(), learning_curve)#Create the optimizer.
-        
-        #Create variables to keep track of training time and the overall measured lowest loss.
-        training_time = 0
-        over_all_lowest_loss = math.inf
-        
-        #Execute training based on the given epoch count.
-        for epoch in range(epoch_count):
-            print(f"Starting epoch {epoch}")
-            loss = training(model,dataloader,loss_func,optimizer) #Train the model
-            
-            print(f"Done in {time.time()-section_timer} seconds\n")
-            training_time += section_timer
-            section_timer = time.time()
-            
-            if over_all_lowest_loss > loss:
-                    over_all_lowest_loss = loss
-            
-            print(f"Saving model {model_name}")
-            torch.save(model, f'{working_dirctory}\\{model_name}.model') #Save model after each training cycle to protect against power outage.
-            print(f"Done in {time.time()-section_timer} seconds\n")
-            section_timer = time.time()
-        
-            testWithImage(model,dataset,random.randint(0,2**int(model_name.split("_")[1])-1),loss_func) #Create images after every cycle of training for visual statistics.
-        
-            print(f"Lowest observed loss {loss}\n")
-            
-            #Append the results of the training cycle to the statistics file.
-            print(f"Saving starts of {model_name}")
-            statFile = open(f"{working_dirctory}\\{model_name}.stat","a")
-            statFile.write(f"{model_name};{start_timer};{epoch};{loss};\n")
-            statFile.close()
-            print(f"Done in {time.time()-section_timer} seconds\n")
-            section_timer = time.time()
-        
-        #Save model after training.
-        print(f"Saving model {model_name}")
-        torch.save(model, f'{working_dirctory}\\{model_name}.model')
         print(f"Done in {time.time()-section_timer} seconds\n")
+        training_time += section_timer
         section_timer = time.time()
         
-        #Save the parameters used during training.
-        settingsFile = open(f"{working_dirctory}\\{model_name}_{start_timer}.settings","w")
-        settingsFile.write(f"Epoch count = {epoch_count}\n")
-        settingsFile.write(f"Batch size = {batch_size}\n")
-        settingsFile.write(f"Learning curve = {learning_curve}\n")
-        settingsFile.write(f"Average training time = {training_time/epoch_count}\n")
-        settingsFile.write(f"Lowest observed loss = {over_all_lowest_loss}\n")
-        settingsFile.close()
+        if over_all_lowest_loss > loss:
+                over_all_lowest_loss = loss
         
-    #Execute if -imgtest switch was suplied.
-    if args.imgtest:
-        seed = args.imgtest
-        testWithImage(model,dataset,seed,loss_func)
+        print(f"Saving model {model_name}")
+        torch.save(model, f'{working_dirctory}\\{model_name}.model') #Save model after each training cycle to protect against power outage.
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
     
-    #Execute if -test switch was suplied.
-    if args.test:
-        print(f"Starting testing on {model_name}")
+        testWithImage(model,dataset,random.randint(0,2**int(model_name.split("_")[1])-1),loss_func) #Create images after every cycle of training for visual statistics.
+    
+        print(f"Lowest observed loss {loss}\n")
         
-        avg_loss = testing(model,dataloader,loss_func)
-        
-        print(f"Average loss: {avg_loss} or pixel intensity of {255*avg_loss}")
+        #Append the results of the training cycle to the statistics file.
+        print(f"Saving starts of {model_name}")
+        statFile = open(f"{working_dirctory}\\{model_name}.stat","a")
+        statFile.write(f"{model_name};{start_timer};{epoch};{loss};\n")
+        statFile.close()
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
+    
+    #Save model after training.
+    print(f"Saving model {model_name}")
+    torch.save(model, f'{working_dirctory}\\{model_name}.model')
+    print(f"Done in {time.time()-section_timer} seconds\n")
+    section_timer = time.time()
+    
+    #Save the parameters used during training.
+    settingsFile = open(f"{working_dirctory}\\{model_name}_{start_timer}.settings","w")
+    settingsFile.write(f"Epoch count = {epoch_count}\n")
+    settingsFile.write(f"Batch size = {batch_size}\n")
+    settingsFile.write(f"Learning curve = {learning_curve}\n")
+    settingsFile.write(f"Average training time = {training_time/epoch_count}\n")
+    settingsFile.write(f"Lowest observed loss = {over_all_lowest_loss}\n")
+    settingsFile.close()
+        
     
     print(f"Finished in {time.time()-start_timer} seconds\n")
     
