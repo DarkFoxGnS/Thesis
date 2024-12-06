@@ -6,7 +6,7 @@ Thesis for IU University of Applied Sciences
 [Dependencies](#dependencies)  
 [OpenSimplex Noise](#opensimplex-noise)  
 [Worley Noise](#worley-noise)  
-[Models](#models)
+[Models](#models)  
 [Artificial Intelligence](#artificial-intelligence)  
 
 
@@ -46,7 +46,7 @@ The models included in the repository are stored in the folders named in the sch
 `NOISE` describes the type of the noise which was used to train the model, it can be either `w` for Worley or `os` for OpenSimpex.  
 `SEED_SIZE` describes the ammount of bits used for the seeds.  
 `TYPE` describes the type of model, it can be either `nn` for Neural Network or `gan` for Generative Adversarial Network.  
-For example the folder `w_model_8_nn` contains a **Neural Network** model trained on **Worley** noise with the seed range of 2<sup>**8**</sup>=255.  
+For example the folder `w_model_8_nn` contains a **Neural Network** model trained on **Worley** noise with the **8**-bit seed range of 0 to 2<sup>8</sup>=255.  
   
 Inside the directory of the model, the following can be found:  
 `images` contains the images generated during the training to keep evidence of evolution.  
