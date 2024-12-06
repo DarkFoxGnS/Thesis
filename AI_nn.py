@@ -6,10 +6,10 @@ if __name__ == "__main__":
     map_size = 64
     learning_curve = 0.001
     batch_size = 16
-    epoch_count = 100
+    epoch_count = 200
 
     model_name = "model"
-    working_dirctory = "model"
+    working_dirctory = "."
     device = "cuda"
     ##################################
 
@@ -47,6 +47,7 @@ if __name__ == "__main__":
     from PIL import Image
     import random
     import math
+    import os
     
     #Create time to measure execution time
     start_timer = time.time()
@@ -283,6 +284,10 @@ def testWithImage(model,data,seed_,loss_function):
     #Log the console and save the generated images.
     print(outimage-trained_data,"\n",f"The average loss: {loss.item()}")
     currentTime = time.time()
+    try:
+        os.mkdir(f"{working_dirctory}\\images")#Create images directory if not existing.
+    except Exception:
+        pass
     generated_image.save(f"{working_dirctory}\\images\\{int(start_timer)}_{int(currentTime)}_{model_name}_{seed_}_generated.png","PNG")
     original_image.save(f"{working_dirctory}\\images\\{int(start_timer)}_{int(currentTime)}_{model_name}_{seed_}_original.png","PNG")
         
