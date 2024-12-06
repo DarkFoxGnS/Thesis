@@ -62,12 +62,27 @@ Inside the directory of the model, the following can be found:
 [Neural Network Model with 12-bit seed](./os_model_12_nn/)  
 [Neural Network Model with 14-bit seed](./os_model_14_nn/)  
 [Neural Network Model with 16-bit seed](./os_model_16_nn/)  
+<break></break>
+
+[Generative Adversarial Network Model with  8-bit seed](./os_model_8_gan/)  
+[Generative Adversarial Network Model with 10-bit seed](./os_model_10_gan/)  
+[Generative Adversarial Network Model with 12-bit seed](./os_model_12_gan/)  
+[Generative Adversarial Network Model with 14-bit seed](./os_model_14_gan/)  
+[Generative Adversarial Network Model with 16-bit seed](./os_model_16_gan/)
+
 ### Worley models
 [Neural Network Model with  8-bit seed](./w_model_8_nn/)  
 [Neural Network Model with 10-bit seed](./w_model_10_nn/)  
 [Neural Network Model with 12-bit seed](./w_model_12_nn/)  
 [Neural Network Model with 14-bit seed](./w_model_14_nn/)  
 [Neural Network Model with 16-bit seed](./w_model_16_nn/)  
+<break></break>
+
+[Generative Adversarial Network Model with  8-bit seed](./w_model_8_gan/)  
+[Generative Adversarial Network Model with 10-bit seed](./w_model_10_gan/)  
+[Generative Adversarial Network Model with 12-bit seed](./w_model_12_gan/)  
+[Generative Adversarial Network Model with 14-bit seed](./w_model_14_gan/)  
+[Generative Adversarial Network Model with 16-bit seed](./w_model_16_gan/)
 
 ## Artificial Intelligence
 AI can be trained by executing
