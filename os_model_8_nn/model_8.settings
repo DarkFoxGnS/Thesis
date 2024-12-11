@@ -1,5 +1,5 @@
 Epoch count = 200
 Batch size = 16
 Learning curve = 0.001
-Average training time = 0.20471975445747376
-Lowest observed loss = 0.0004461467615328729
+Average training time = 0.22574579000473022
+Lowest observed loss = 0.00013116809714119881
