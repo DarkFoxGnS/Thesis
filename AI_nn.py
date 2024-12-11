@@ -173,11 +173,14 @@ def training(model, data, loss_function, optimizer):
         loss_function (LossFunction): This functions will be used to evaluate the performance of the model.
         optimizer (Optimizer): The optimizer, which will train the model.
     @returns
-        lowest_loss (Float): The lowest observed loss during training.
+        batch_loss (Float): The average of losses observer during training.
     """
     model.train() #Set the model to training mode.
-    lowest_loss = float("inf")#Set the highest possible value for the float.
+    batch_loss = 0#It will hold the combined losses.
+    executed_batches = 0.#It will hold the executed batch counts, allows for partially full batches.
     for batch,(seed, map) in enumerate(data):
+        
+        executed_batches+=len(seed)/batch_size #the lenght of seeds are the size of the current batch, and divided by batch size allows for not full batches to be calculated.
         
         #Send the seed and the map to the selected device (if needed).
         seed = seed.to(device)
@@ -193,47 +196,52 @@ def training(model, data, loss_function, optimizer):
         optimizer.step()
         
         #Find the lowest loss.
-        lowest_loss = min(loss.item(),lowest_loss)
+        batch_loss += loss.item()
         
         #Log to console.
         print(f"Batch {batch} reported with loss {loss.item()}")
     
-    return lowest_loss
+    return batch_loss/executed_batches #Gives an average in the entire epoch
 
-def testing(model,data,loss_function):
+def generateImage(model,seed,epoch):
     """
-    Testing for loss
+    Generates an image and saves it to hard drive.
     @params
-        model (Module): The model to be tested.
-        data (DataLoader): The dataloader that holds the testing data.
-        loss_function (LossFunction): The loss function that is used for evaluation.
-    @returns
-        average_lost (Float): The average lost of the model when tested on the data.
+        model (Module): The model to be used to generate an image.
+        seed (Integer): The seed use to generate the image.
+        epoch (Integer): The current epoch during the testing.
     """
-    
-    #Set model into evaluation mode.
+    print(f"Generating seed: {seed}")
     model.eval()
-    size = len(data)
-    average_lost = 0
+    #Create image.
+    image = Image.new("RGB",(64,64))
+    pixels = image.load()
     
-    for batch,(seed, pixels) in enumerate(data):
-        #Send seed and map to the selected device (if needed).
-        seed = seed.to(device)
-        pixels = pixels.to(device)
-        
-        #Execute model.
-        output = model(seed)
-        
-        #Observe loss.
-        loss = loss_function(output,pixels)
-        average_lost += loss.item()
-        
-        #Log progress to console.
-        print(f"Batch {batch} reported with loss {loss.item()}")
+    #Convert seed.
+    seed_str = format(seed,"016b")
+    seed_array = [float(x) for x in seed_str]
+    seed_tensor = torch.tensor(seed_array).view(1,-1)
+    seed_tensor = seed_tensor.to(device)
+    #Generate image via model.
+    output = model(seed_tensor)
+    output = output.view(64,64)
     
-    #Get the average loss.
-    average_lost /= size
-    return average_lost
+    #Convert generated data into image.
+    for i in range(64):
+        for j in range(64):
+            data = output[i][j]
+            data = int(255*data)
+            pixels[i,j] = (data,data,data)
+    
+    #Create images directory if not existing.
+    try:
+        os.mkdir(f"{working_dirctory}\\images\\majorSteps")
+    except Exception:
+        pass
+    
+    #Save image.
+    image.save(f"{working_dirctory}\\images\\majorSteps\\{model_name}_{seed}_generated_{epoch}.png","PNG")
+    
 
 def testWithImage(model,data,seed_,loss_function):
     """
@@ -243,6 +251,8 @@ def testWithImage(model,data,seed_,loss_function):
         data (DataSet): The dataset to be used for original image.
         seed_ (Integer): The seed to be tested.
         loss_function (LossFunction): The loss function to be used to observer the loss of the AI.
+    @returns
+        loss (Float): The evaluated loss.
     """
     
     print(f"Testing {seed_}")
@@ -282,7 +292,6 @@ def testWithImage(model,data,seed_,loss_function):
             original_pixels[x,y] = (original_data,original_data,original_data)
             
     #Log the console and save the generated images.
-    print(outimage-trained_data,"\n",f"The average loss: {loss.item()}")
     currentTime = time.time()
     try:
         os.mkdir(f"{working_dirctory}\\images")#Create images directory if not existing.
@@ -290,6 +299,8 @@ def testWithImage(model,data,seed_,loss_function):
         pass
     generated_image.save(f"{working_dirctory}\\images\\{int(start_timer)}_{int(currentTime)}_{model_name}_{seed_}_generated.png","PNG")
     original_image.save(f"{working_dirctory}\\images\\{int(start_timer)}_{int(currentTime)}_{model_name}_{seed_}_original.png","PNG")
+    
+    return loss.item()
         
 def main():
     """
@@ -340,32 +351,47 @@ def main():
     
     #Execute training based on the given epoch count.
     for epoch in range(epoch_count):
+        #############################################
+        #Training.
         print(f"Starting epoch {epoch}")
-        loss = training(model,dataloader,loss_func,optimizer) #Train the model
+        avg_loss = training(model,dataloader,loss_func,optimizer) #Train the model
         
         print(f"Done in {time.time()-section_timer} seconds\n")
         training_time += time.time()-section_timer
         section_timer = time.time()
         
-        if over_all_lowest_loss > loss:
-                over_all_lowest_loss = loss
+        #############################################
+        #Saving.
         
         print(f"Saving model {model_name}")
         torch.save(model, f'{working_dirctory}\\{model_name}.model') #Save model after each training cycle to protect against power outage.
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
     
-        testWithImage(model,dataset,random.randint(0,2**int(model_name.split("_")[1])-1),loss_func) #Create images after every cycle of training for visual statistics.
-    
-        print(f"Lowest observed loss {loss}\n")
+        #############################################
+        #Testing.
+        loss = testWithImage(model,dataset,random.randint(0,2**int(model_name.split("_")[1])-1),loss_func) #Create images after every cycle of training for visual statistics.
+        over_all_lowest_loss = min(over_all_lowest_loss,loss)
         
-        #Append the results of the training cycle to the statistics file.
+        #############################################
+        #Log values to console.
+        
+        print(f"\nAverage training loss: {avg_loss}")
+        print(f"Evaluated loss: {loss}")
+        
+        #############################################
+        #Save statistics.
         print(f"Saving starts of {model_name}")
         statFile = open(f"{working_dirctory}\\{model_name}.stat","a")
-        statFile.write(f"{model_name};{start_timer};{epoch};{loss};\n")
+        statFile.write(f"{model_name};{start_timer};{avg_loss};{loss}\n")
         statFile.close()
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
+        
+        #############################################
+        #Generate image to mark keypoints
+        if (epoch+1) % int(epoch_count/4) == 0:
+            generateImage(model,int(len(dataset)/2),epoch+1)
     
     #Save model after training.
     print(f"Saving model {model_name}")
