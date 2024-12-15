@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
 from torch.utils.data import Dataset, DataLoader
 from torch import nn
-class SimplexModel(nn.Module):
+class NeuralNetworkModel(nn.Module):
     """
     This is a subclass of the Torch.nn.Module.
     Takes the 16bit value of the seed as input, and produces a 64x64 image in a single array.
@@ -324,7 +324,7 @@ def main():
         print(f"Model loaded")
     except Exception as e:
         print(e)
-        model = SimplexModel()
+        model = NeuralNetworkModel()
     
     #Move model to the selected device.
     model.to(device)

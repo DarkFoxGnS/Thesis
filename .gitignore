@@ -3,3 +3,4 @@ __pycache__/
 *.data
 *.bat
 manim_files/
+media/
