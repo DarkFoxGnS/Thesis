@@ -65,27 +65,33 @@ class DiffuseModel(nn.Module):
         """
         super().__init__()
         self.compress =nn.Sequential( #Define compression layers.
-            nn.Conv2d(1,32,3,2,1),
+            nn.Conv2d(1,16,3,1,1),
+            nn.Conv2d(16,32,3,2,1),
             nn.ReLU(),
-            nn.Conv2d(32,64,3,2,1),
+            nn.Conv2d(32,48,3,1,1),
+            nn.Conv2d(48,64,3,2,1),
             nn.ReLU(),
-            nn.Conv2d(64,128,3,2,1),
+            nn.Conv2d(64,96,3,1,1),
+            nn.Conv2d(96,128,3,2,1),
             nn.ReLU(),
         )
         
         self.seed_matrix = nn.Linear(16,128*8*8) #Transform the seed to the expanded seed.
         self.seed_combiner = nn.Conv2d(256,128,1) #Force the combined seed and bottleneck of x together.
-        
+                
         self.decompress = nn.Sequential( #Transform the bottleneck back to the image.
-            nn.ConvTranspose2d(128,64,4,2,1),
+            nn.ConvTranspose2d(128,96,3,1,1),
+            nn.ConvTranspose2d(96,64,4,2,1),
             nn.ReLU(),
-            nn.ConvTranspose2d(64,32,4,2,1),
+            nn.ConvTranspose2d(64,48,3,1,1),
+            nn.ConvTranspose2d(48,32,4,2,1),
             nn.ReLU(),
-            nn.ConvTranspose2d(32,1,4,2,1),
+            nn.ConvTranspose2d(32,16,3,1,1),
+            nn.ConvTranspose2d(16,1,4,2,1),
             nn.Sigmoid(),
         )
     
-    def forward(self, x,seed,time_stamp):
+    def forward(self, x,seed):
         """
         This is called during the execution of the model.
         @params
@@ -99,6 +105,7 @@ class DiffuseModel(nn.Module):
         
         temp = torch.cat([x.view(-1,128,8,8),seed],dim=1) #Combine the seed and the x on the first dimension resulting in [-1,512,8,8]
         x = self.seed_combiner(temp) #Transform [-1,256,8,8] seed and x combination into [-1,256,8,8]
+        
         x = self.decompress(x) #Decompress the image to generate the final image.
         return x
         
@@ -214,10 +221,8 @@ def training(model, data, loss_function, optimizer):
         
         for i in range(1,maximum_noise_steps):
             noised_map = noiser(map,maximum_noise_steps,i)
-            #target = noiser(map,maximum_noise_steps,i-1)
             #Send the seed and the map to the selected device (if needed).
             noised_map = noised_map.to(device)
-            #target = target.to(device)
             seed = seed.to(device)
             map = map.to(device)
             
