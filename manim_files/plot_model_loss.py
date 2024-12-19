@@ -27,12 +27,12 @@ class modelLoss(Scene):
         #Variables
         x_scale = 0.95
         y_scale = 0.95
-        #y_max_data = 0.04
-        y_max_data = 0.09
+        y_max_data = 0.04
+        #y_max_data = 0.09
         ################################
         #Loading data
         
-        file = open("..\\os_model_8_diff\\model_8.stat","r")
+        file = open("os_model_12_nn\\model_12.stat","r")
         
         dataset = file.read()
         dataset = dataset[0:-1].split("\n")
@@ -97,11 +97,6 @@ class modelLoss(Scene):
             prev_x_loc = (prev_epoch*x_scale+1)/(dataset_size+1)
             prev_avg_y_loc = prev_avg_performance/y_max_data
             prev_eval_y_loc = prev_eval_performance/y_max_data
-            
-            #Add line of regression based on observed start of regression
-            if idx == 600:
-                self.add(Line(start = scaled_point(cur_x_loc,-0.02,0), end = scaled_point(cur_x_loc,1,0), color = BLACK, stroke_width = 1))
-                self.add(Text("Dataset saturation",color = BLACK).scale(0.4).rotate(90*DEGREES).shift(to_np(scaled_point(cur_x_loc-0.01,0.6,0))))
             
             avg_line = Line(start = scaled_point(prev_x_loc,prev_avg_y_loc,0), end = scaled_point(cur_x_loc,cur_avg_y_loc,0),color=BLACK,stroke_width = 2)
             eval_line = Line(start = scaled_point(prev_x_loc,prev_eval_y_loc,0), end = scaled_point(cur_x_loc,cur_eval_y_loc,0),color=RED,stroke_width = 2)
