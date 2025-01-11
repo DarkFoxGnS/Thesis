@@ -52,5 +52,5 @@ class StatFile():
         return float(self.data[id-1].split(";")[2])
         
     def getPerImage(self,id):
-        return float(self.data[id-1].split(";")[2])
+        return float(self.data[id-1].split(";")[3])
         

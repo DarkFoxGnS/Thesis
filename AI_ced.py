@@ -101,7 +101,7 @@ class DiffuseModel(nn.Module):
         """
         
         x = self.compress(x) #Compress the image to [-1,256,8,8]
-        seed = self.seed_matrix(seed).view(-1,128,8,8) #Expand the seed to [-1,256,8,8]
+        seed = self.seed_matrix(seed).view(-1,128,8,8) #Expand the seed to [-1,128,8,8]
         
         temp = torch.cat([x.view(-1,128,8,8),seed],dim=1) #Combine the seed and the x on the first dimension resulting in [-1,512,8,8]
         x = self.seed_combiner(temp) #Transform [-1,256,8,8] seed and x combination into [-1,256,8,8]
