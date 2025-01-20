@@ -1,0 +1,15 @@
+
+Timing Worley Noise:
+	Import time: 0.27751755714416504 seconds
+	Generating 100 images took 0.23527741432189941 seconds
+
+Timing Hybrid Model:
+	Import time: 2.0296733379364014 seconds
+	Loading of the Hybrid Model took: 0.2646172046661377
+	Image generation of 100 images took 21.154630661010742 seconds
+		Preparation took 0.06113123893737793 seconds
+		Generation took 0.34026455879211426 seconds
+		Parsing took 20.75323486328125 seconds
+
+Comparing of results took 0.0 seconds
+The difference of images is 1.3839346045711672e-05
