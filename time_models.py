@@ -5,7 +5,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument("model")
 parser.add_argument("seed_start")
 parser.add_argument("seed_end")
+parser.add_argument("device")
 args = parser.parse_args()
+
+target_device = "cpu"
+
+if args.device:
+    target_device = args.device
 
 program_start = time.time()
 
@@ -20,6 +26,7 @@ def time_worley(seed_start,seed_end):
     for seed in range(seed_start,seed_end):
         w, c = worley((4,4), dens=16, seed=seed)
         w = w[0] 
+
         for x in range(64):
             for y in range(64):
                 data = w[x][y]
@@ -57,6 +64,8 @@ def time_model_nn(seed_start,seed_end):
     section_time = time.time()
     model.load_state_dict(torch.load(args.model,weights_only=True))
     print("\tLoading of the Neural Network Model took:",time.time()-section_time)
+    
+    model = model.to(target_device)
 
     preparation_time = 0
     generation_time = 0
@@ -70,7 +79,7 @@ def time_model_nn(seed_start,seed_end):
         seed = [float(x) for x in seed]
         seed = torch.Tensor(seed)
         seed = seed.view(-1,16)
-        
+        seed = seed.to(target_device)
         preparation_time += time.time()-section_time
         section_time = time.time()
 
@@ -104,6 +113,8 @@ def time_model_ced(seed_start,seed_end):
     model.load_state_dict(torch.load(args.model,weights_only=True))
     print("\tLoading of the Conditional Encoder Decoder Model took:",time.time()-section_time)
    
+    model = model.to(target_device)  
+
     preparation_time = 0
     generation_time = 0
     parsing_time = 0
@@ -116,11 +127,13 @@ def time_model_ced(seed_start,seed_end):
         sigmoid = torch.nn.Sigmoid()
         image = sigmoid(image)
         image = image.view(-1,64,64)        
+        image = image.to(target_device)
 
         seed = format(seed,"016b")
         seed = [float(x) for x in seed]
         seed = torch.Tensor(seed)
         seed = seed.view(-1,16) 
+        seed = seed.to(target_device)
         
         preparation_time += time.time()-section_time
         section_time = time.time()
@@ -161,6 +174,7 @@ def time_model_hy(seed_start,seed_end):
     model.load_state_dict(torch.load(args.model,weights_only=True))
     print("\tLoading of the Hybrid Model took:",time.time()-section_time)
     
+    model = model.to(target_device)
         
     preparation_time = 0
     generation_time = 0
@@ -174,7 +188,8 @@ def time_model_hy(seed_start,seed_end):
         seed = [float(x) for x in seed]
         seed = torch.Tensor(seed)
         seed = seed.view(-1,16)
-        
+        seed = seed.to(target_device)
+
         preparation_time += time.time()-section_time
         section_time = time.time()
 
