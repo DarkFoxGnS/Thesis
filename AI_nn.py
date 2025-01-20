@@ -318,13 +318,13 @@ def main():
     print(f"Creating model...")
     
     #Use the model if it exists, else create new.
+    model = NeuralNetworkModel()
     try:
         print(f"Attempting to load model {model_name}")
-        model = torch.load(f'{working_dirctory}\\{model_name}.model', weights_only=False)
+        model.load_state_dict(torch.load(f'{working_dirctory}\\{model_name}.nn', weights_only=True))
         print(f"Model loaded")
     except Exception as e:
         print(e)
-        model = NeuralNetworkModel()
     
     #Move model to the selected device.
     model.to(device)
@@ -364,7 +364,7 @@ def main():
         #Saving.
         
         print(f"Saving model {model_name}")
-        torch.save(model, f'{working_dirctory}\\{model_name}.model') #Save model after each training cycle to protect against power outage.
+        torch.save(model.state_dict(), f'{working_dirctory}\\{model_name}.nn') #Save model after each training cycle to protect against power outage.
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
     

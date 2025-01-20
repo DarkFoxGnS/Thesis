@@ -2,6 +2,8 @@
 __pycache__/
 *.data
 *.bat
+*.hy
+*.swp
 media/Tex
 media/texts
 media/videos

@@ -54,7 +54,7 @@ if __name__ == "__main__":
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torch import nn
-class DiffuseModel(nn.Module):
+class ConditionalEncoderDecoderModel(nn.Module):
     """
     This is a subclass of the Torch.nn.Module.
     Takes the 16bit value of the seed as input, and produces a 64x64 image in a single array.
@@ -376,13 +376,13 @@ def main():
     print(f"Creating model...")
     
     #Use the model if it exists, else create new.
+    model =ConditionalEncoderDecoderModel()
     try:
         print(f"Attempting to load model {model_name}")
-        model = torch.load(f'{working_dirctory}\\{model_name}.model', weights_only=False)
+        model.load_state_dict(torch.load(f'{working_dirctory}\\{model_name}.ced', weights_only=False))
         print(f"Model loaded")
     except Exception as e:
         print(e)
-        model = DiffuseModel()
     
     #Move model to the selected device.
     model.to(device)
@@ -422,7 +422,7 @@ def main():
         #Saving.
         
         print(f"Saving model {model_name}")
-        torch.save(model, f'{working_dirctory}\\{model_name}.model') #Save model after each training cycle to protect against power outage.
+        torch.save(model.state_dict(), f'{working_dirctory}\\{model_name}.ced') #Save model after each training cycle to protect against power outage.
         print(f"Done in {time.time()-section_timer} seconds\n")
         section_timer = time.time()
     
