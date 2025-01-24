@@ -1,0 +1,15 @@
+
+Timing Worley Noise:
+	Import time: 0.35218024253845215 seconds
+	Generating 100 images took 0.29100513458251953 seconds
+
+Timing Conditional Encoder Decoder Model:
+	Import time: 2.7209854125976562 seconds
+	Loading of the Conditional Encoder Decoder Model took: 0.16347837448120117
+	Image generation of 100 images took a total of 2.6727652549743652 seconds
+		Preparation took 0.006981611251831055 seconds
+		Generation took 0.8813991546630859 seconds
+		Parsing took 1.7843844890594482 seconds
+
+Comparing of results took 0.09964776039123535 seconds
+The difference of images is 0.00017387452314044575

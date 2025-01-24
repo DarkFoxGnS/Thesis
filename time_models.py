@@ -1,17 +1,22 @@
 import time
 import argparse
+import math
 
 parser = argparse.ArgumentParser()
 parser.add_argument("model")
 parser.add_argument("seed_start")
 parser.add_argument("seed_end")
 parser.add_argument("device")
+parser.add_argument("batch",type=int)
 args = parser.parse_args()
 
 target_device = "cpu"
-
+batch_size = 1
 if args.device:
     target_device = args.device
+
+if args.batch:
+    batch_size = args.batch
 
 program_start = time.time()
 
@@ -71,14 +76,10 @@ def time_model_nn(seed_start,seed_end):
     generation_time = 0
     parsing_time = 0
     dataset=[]
-    for seed in range(seed_start,seed_end):
+    for cycle in range(math.ceil((seed_end-seed_start)/batch_size)):
         section_time = time.time()
-        
         #Generate image inputs.
-        seed = format(seed,"016b")
-        seed = [float(x) for x in seed]
-        seed = torch.Tensor(seed)
-        seed = seed.view(-1,16)
+        seed = torch.Tensor([[float(seed_bit) for seed_bit in format(seed,"016b")] for seed in [seed for seed in range(seed_start,seed_end)]][cycle*batch_size:(cycle+1)*batch_size])
         seed = seed.to(target_device)
         preparation_time += time.time()-section_time
         section_time = time.time()
@@ -90,7 +91,7 @@ def time_model_nn(seed_start,seed_end):
         section_time = time.time()
 
         #Parse output.
-        for value in output.view(4096).data:
+        for value in output.to("cpu").view(-1).data:
             dataset.append(float(value))
     
         parsing_time += time.time()-section_time
@@ -119,25 +120,20 @@ def time_model_ced(seed_start,seed_end):
     generation_time = 0
     parsing_time = 0
     dataset = []
-    for seed in range(seed_start,seed_end):
+    for cycle in range(math.ceil((seed_end-seed_start)/batch_size)):
         section_time = time.time()
 
         #Prepare image inputs.
-        image = torch.randn(64,64)
-        sigmoid = torch.nn.Sigmoid()
-        image = sigmoid(image)
-        image = image.view(-1,64,64)        
-        image = image.to(target_device)
-
-        seed = format(seed,"016b")
-        seed = [float(x) for x in seed]
-        seed = torch.Tensor(seed)
-        seed = seed.view(-1,16) 
-        seed = seed.to(target_device)
         
+        seed = torch.Tensor([[float(seed_bit) for seed_bit in format(seed,"016b")] for seed in [seed for seed in range(seed_start,seed_end)]][cycle*batch_size:(cycle+1)*batch_size])
+        seed = seed.to(target_device)
+         
+        image = torch.nn.Sigmoid()(torch.randn(seed.shape[0],1,64,64))
+        image = image.to(target_device) 
+
         preparation_time += time.time()-section_time
         section_time = time.time()
-        
+         
         #Generate image.
         for i in range(100):
             output = model(image,seed)
@@ -146,12 +142,9 @@ def time_model_ced(seed_start,seed_end):
         generation_time += time.time()-section_time
         section_time = time.time()
         
-        output = output.view(64,64).data
-        
         #Parse output.
-        for x in range(64):
-            for y in range(64):
-                dataset.append(float(output[x][y]))
+        for x in output.to("cpu").view(-1):
+            dataset.append(float())
         
         parsing_time += time.time()-section_time
         
@@ -180,14 +173,11 @@ def time_model_hy(seed_start,seed_end):
     generation_time = 0
     parsing_time = 0
     dataset=[]
-    for seed in range(seed_start,seed_end):
+    for cycle in range(math.ceil((seed_end-seed_start)/batch_size)):
         section_time = time.time()
         
         #Generate image inputs.
-        seed = format(seed,"016b")
-        seed = [float(x) for x in seed]
-        seed = torch.Tensor(seed)
-        seed = seed.view(-1,16)
+        seed = torch.Tensor([[float(seed_bit) for seed_bit in format(seed,"016b")] for seed in [seed for seed in range(seed_start,seed_end)]][cycle*batch_size:(cycle+1)*batch_size])
         seed = seed.to(target_device)
 
         preparation_time += time.time()-section_time
@@ -200,7 +190,7 @@ def time_model_hy(seed_start,seed_end):
         section_time = time.time()
 
         #Parse output.
-        for value in output.view(4096).data:
+        for value in output.to("cpu").view(-1).data:
             dataset.append(float(value))
     
         parsing_time += time.time()-section_time
@@ -234,14 +224,13 @@ def main():
     #call the respective functions.
     original_dataset = []
     model_dataset = []
-
     original_dataset = time_noise[noise_type](seed_start,seed_end)
     model_dataset = time_model[model_type](seed_start,seed_end)
     
     #Compare differences.
     section_time = time.time()
     difference = 0
-    for i in range(4096):
+    for i in range(4096*(seed_end-seed_start)):
         o_data = original_dataset[i]
         m_data = model_dataset[i]
         difference = abs(o_data-m_data)

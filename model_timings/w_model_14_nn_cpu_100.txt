@@ -1,0 +1,15 @@
+
+Timing Worley Noise:
+	Import time: 0.4454336166381836 seconds
+	Generating 100 images took 0.325944185256958 seconds
+
+Timing Neural Network Model:
+	Import time: 2.76644229888916 seconds
+	Loading of the Neural Network Model took: 0.17869186401367188
+	Image generation of 100 images took 1.4700541496276855 seconds
+		Preparation took 0.0009980201721191406 seconds
+		Generation took 0.010186195373535156 seconds
+		Parsing took 1.4588699340820312 seconds
+
+Comparing of results took 0.08229613304138184 seconds
+The difference of images is 1.326494745346944e-05

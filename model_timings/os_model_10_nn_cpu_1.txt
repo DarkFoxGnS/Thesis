@@ -1,0 +1,15 @@
+
+Timing Open Simplex Noise:
+	Import time: 0.1649014949798584 seconds
+	Generating 100 images took 8.055177927017212 seconds
+
+Timing Neural Network Model:
+	Import time: 3.3879129886627197 seconds
+	Loading of the Neural Network Model took: 0.18106818199157715
+	Image generation of 100 images took 2.1640546321868896 seconds
+		Preparation took 0.06618738174438477 seconds
+		Generation took 0.15888357162475586 seconds
+		Parsing took 1.938983678817749 seconds
+
+Comparing of results took 0.13396024703979492 seconds
+The difference of images is 1.908299948632397e-05

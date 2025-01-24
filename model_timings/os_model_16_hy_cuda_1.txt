@@ -1,0 +1,15 @@
+
+Timing Open Simplex Noise:
+	Import time: 0.1424868106842041 seconds
+	Generating 100 images took 10.370370626449585 seconds
+
+Timing Hybrid Model:
+	Import time: 2.709228038787842 seconds
+	Loading of the Hybrid Model took: 0.33556437492370605
+	Image generation of 100 images took 1.9043610095977783 seconds
+		Preparation took 0.07378721237182617 seconds
+		Generation took 0.4377784729003906 seconds
+		Parsing took 1.3927953243255615 seconds
+
+Comparing of results took 0.07660269737243652 seconds
+The difference of images is 7.886094515192178e-05

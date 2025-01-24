@@ -1,0 +1,15 @@
+
+Timing Open Simplex Noise:
+	Import time: 0.2588975429534912 seconds
+	Generating 100 images took 12.343352556228638 seconds
+
+Timing Conditional Encoder Decoder Model:
+	Import time: 3.341198205947876 seconds
+	Loading of the Conditional Encoder Decoder Model took: 0.19567012786865234
+	Image generation of 100 images took a total of 72.86312460899353 seconds
+		Preparation took 0.09351301193237305 seconds
+		Generation took 71.29538702964783 seconds
+		Parsing took 1.47422456741333 seconds
+
+Comparing of results took 0.1020820140838623 seconds
+The difference of images is 4.326945220605616e-05
