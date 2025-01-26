@@ -3,7 +3,7 @@ By Tibor Péter Szabó
 Thesis for IU University of Applied Sciences.
 
 ## Table of contents
-[Dependencies](#dependencies)  
+[Preliminary actions](#Preliminary-actions)  
 [OpenSimplex Noise](#opensimplex-noise)  
 [Worley Noise](#worley-noise)  
 [Models](#models)  
@@ -60,7 +60,7 @@ These files will be generated into the same directory as [Worley.py](./Worley.py
 The models included in the repository are stored in the folders named in the scheme `<NOISE>_model_<SEED_SIZE>_<TYPE>` where  
 `NOISE` describes the type of the noise which was used to train the model, it can be either `w` for Worley or `os` for OpenSimpex.  
 `SEED_SIZE` describes the ammount of bits used for the seeds.  
-`TYPE` describes the type of model, it can be either `nn` for Neural Network or `gan` for Generative Adversarial Network.  
+`TYPE` describes the type of model, it can be either `nn` for Neural Network, `ced` for Conditional Encoder-Decoder or `hy` for Hybrid.  
 For example the folder `w_model_8_nn` contains a **Neural Network** model trained on **Worley** noise with the **8**-bit seed range of 0 to 2<sup>8</sup>=255.  
   
 Inside the directory of the model, the following can be found:  
