@@ -1,10 +1,16 @@
+#Exclude not important folders.
 .git/
 __pycache__/
 temp/
+#Exclude large data files.
 *.data
+#Exclude automation scripts.
 *.bat
+#Exclude large hybrid model files.
 *.hy
+#Exclude Vim editor swap files.
 *.swp
+#Exclude miscellaneous manim folders.
 media/Tex
 media/texts
 media/videos
