@@ -1,12 +1,18 @@
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("model")
-parser.add_argument("seed",type=int)
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("model")
+    parser.add_argument("seed",type=int)
+    args = parser.parse_args()
 
 import torch
 def save_image(image_tensor):
+    """
+    Saves the image to the hard drive.
+    @params:
+        image_tensor (Tensor): a [64,64] torch Tensor containing the image.
+    """
     from PIL import Image
     out_image = Image.new("RGB",(64,64))
     pixels = out_image.load()
@@ -20,10 +26,20 @@ def save_image(image_tensor):
     print("Image written to:",f"media\\model_image_tests\\{args.model.split("\\")[0]}_{args.seed}.png")
 
 def load_model(model):
+    """
+    Loads the model from the hard drive.
+    @params:
+        model (Model): A torch model of any type.
+    """
     model.load_state_dict(torch.load(args.model,weights_only=False))
     print("Using",model)
 
 def AI_nn(seed_tensor):
+    """
+    Generates an image using Neural Network preset found in AI_nn.py file.
+    @params:
+        seed_tensor (Tensor): a [16] torch Tensor containing the seed bits.
+    """
     import AI_nn
     model = AI_nn.NeuralNetworkModel()
     load_model(model)
@@ -32,6 +48,11 @@ def AI_nn(seed_tensor):
     save_image(output)
 
 def AI_ced(seed_tensor):
+    """
+    Generates an image using Conditional Encoder-Decoder preset found in AI_ced.py file.
+    @params:
+        seed_tensor (Tensor): a [16] torch Tensor containing the seed bits.
+    """
     import AI_ced
     model = AI_ced.ConditionalEncoderDecoderModel()
     load_model(model)
@@ -46,6 +67,11 @@ def AI_ced(seed_tensor):
 
 
 def AI_hy(seed_tensor):
+    """
+    Generates an image using Hybrid preset found in AI_hy.py file.
+    @params:
+        seed_tensor (Tensor): a [16] torch Tensor containing the seed bits.
+    """
     import AI_hy
     model = AI_hy.HybridModel()
     load_model(model)
@@ -55,6 +81,9 @@ def AI_hy(seed_tensor):
     output = output.view(64,64)
     save_image(output)
 def main():
+    """
+    The main function.
+    """
     execute_model = {
             "nn":AI_nn,
             "ced":AI_ced,

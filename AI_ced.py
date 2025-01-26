@@ -57,7 +57,7 @@ from torch import nn
 class ConditionalEncoderDecoderModel(nn.Module):
     """
     This is a subclass of the Torch.nn.Module.
-    Takes the 16bit value of the seed as input, and produces a 64x64 image in a single array.
+    Takes the 16bit value of the seed and a 64 by 64 image as input, and produces a 64x64 image in a 2D array.
     """
     def __init__ (self):
         """

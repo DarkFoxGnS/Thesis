@@ -28,12 +28,12 @@ class modelLoss(Scene):
         x_scale = 0.95
         y_scale = 0.95
         y_max_avg_data = 0.0004
-        y_max_eval_data = 0.07
+        y_max_eval_data = 0.08
         
         ################################
         #Loading data
         
-        file = open("w_model_14_hy\\model_14.stat","r")
+        file = open("w_model_16_hy\\model_16.stat","r")
         
         dataset = file.read()
         dataset = dataset[0:-1].split("\n")

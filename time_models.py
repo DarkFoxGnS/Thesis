@@ -2,25 +2,32 @@ import time
 import argparse
 import math
 
-parser = argparse.ArgumentParser()
-parser.add_argument("model")
-parser.add_argument("seed_start")
-parser.add_argument("seed_end")
-parser.add_argument("device")
-parser.add_argument("batch",type=int)
-args = parser.parse_args()
-
-target_device = "cpu"
-batch_size = 1
-if args.device:
-    target_device = args.device
-
-if args.batch:
-    batch_size = args.batch
-
-program_start = time.time()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("model")
+    parser.add_argument("seed_start")
+    parser.add_argument("seed_end")
+    parser.add_argument("device")
+    parser.add_argument("batch",type=int)
+    args = parser.parse_args()
+    
+    target_device = "cpu"
+    batch_size = 1
+    if args.device:
+        target_device = args.device
+    
+    if args.batch:
+        batch_size = args.batch
+    
+    program_start = time.time()
 
 def time_worley(seed_start,seed_end):
+    """
+    Times the execution time of the Worley noise generation.
+    @params:
+        seed_start (Integer): The starting of the seed.
+        seed_end (Integer): The end range of the seed.
+    """
     print("\nTiming Worley Noise:")
     section_time = time.time()
     from pythonworley import worley 
@@ -41,6 +48,12 @@ def time_worley(seed_start,seed_end):
     return dataset
 
 def time_open_simplex(seed_start,seed_end):
+    """
+    Times the execution time of the Simplex noise generation.
+    @params:
+        seed_start (Integer): The starting of the seed.
+        seed_end (Integer): The end range of the seed.
+    """
     print("\nTiming Open Simplex Noise:")
     section_time = time.time()
     import opensimplex
@@ -60,6 +73,12 @@ def time_open_simplex(seed_start,seed_end):
     return dataset
 
 def time_model_nn(seed_start,seed_end):
+    """
+    Times the execution time of the Neural Network Model noise generation.
+    @params:
+        seed_start (Integer): The starting of the seed.
+        seed_end (Integer): The end range of the seed.
+    """
     print("\nTiming Neural Network Model:")
     section_time = time.time()
     import torch
@@ -104,6 +123,12 @@ def time_model_nn(seed_start,seed_end):
     return dataset
 
 def time_model_ced(seed_start,seed_end):    
+    """
+    Times the execution time of the Conditional Encoder-Decoder noise generation.
+    @params:
+        seed_start (Integer): The starting of the seed.
+        seed_end (Integer): The end range of the seed.
+    """
     print("\nTiming Conditional Encoder Decoder Model:")
     section_time = time.time()
     import torch
@@ -156,7 +181,13 @@ def time_model_ced(seed_start,seed_end):
     
     return dataset
 
-def time_model_hy(seed_start,seed_end):
+def time_model_hy(seed_start,seed_nd):
+    """
+    Times the execution time of the Hybrid model noise generation.
+    @params:
+        seed_start (Integer): The starting of the seed.
+        seed_end (Integer): The end range of the seed.
+    """
     print("\nTiming Hybrid Model:")
     section_time = time.time()
     import torch
@@ -203,6 +234,9 @@ def time_model_hy(seed_start,seed_end):
     return dataset
 
 def main():
+    """
+    The main function of the script.
+    """
     #put model timing functions inside a dictionary.
     time_model = {
             "nn":time_model_nn,

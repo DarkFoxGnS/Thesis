@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="pydoc.css">
+<title>Python: module Util</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">Util</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:d%3A%5Cmega%5Cmega%20saves%5Cuniversity%5Cthesis%5Cproject%5Cutil.py">d:\mega\mega saves\university\thesis\project\util.py</a></td></tr></table>
+    <p><span class="code">The&nbsp;module&nbsp;is&nbsp;meant&nbsp;to&nbsp;be&nbsp;imported&nbsp;into&nbsp;the&nbsp;python&nbsp;REPL&nbsp;enviroment&nbsp;as&nbsp;a&nbsp;Utility&nbsp;framework.</span></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="Util.html#StatFile">StatFile</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="StatFile">class <strong>StatFile</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#StatFile">StatFile</a>(file)<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;is&nbsp;used&nbsp;to&nbsp;easily&nbsp;observe&nbsp;the&nbsp;'.stat'&nbsp;statistic&nbsp;file&nbsp;generated&nbsp;by&nbsp;the&nbsp;model&nbsp;after&nbsp;training.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="StatFile-__init__"><strong>__init__</strong></a>(self, file)</dt><dd><span class="code">Creates&nbsp;the&nbsp;<a href="builtins.html#object">object</a>.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;(string):&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;.stat&nbsp;file&nbsp;to&nbsp;be&nbsp;opened.<br>
+@returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#StatFile">StatFile</a>&nbsp;<a href="builtins.html#object">object</a>.</span></dd></dl>
+
+<dl><dt><a name="StatFile-getAvg"><strong>getAvg</strong></a>(self, id)</dt><dd><span class="code">Returns&nbsp;the&nbsp;average&nbsp;value&nbsp;at&nbsp;the&nbsp;given&nbsp;id.<br>
+@params.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;(Integer):&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;value&nbsp;with&nbsp;1&nbsp;being&nbsp;the&nbsp;first.<br>
+@returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;(Float):&nbsp;The&nbsp;average&nbsp;value&nbsp;at&nbsp;the&nbsp;given&nbsp;id.</span></dd></dl>
+
+<dl><dt><a name="StatFile-getPerImage"><strong>getPerImage</strong></a>(self, id)</dt><dd><span class="code">Returns&nbsp;the&nbsp;per&nbsp;image&nbsp;value&nbsp;at&nbsp;the&nbsp;given&nbsp;id.<br>
+@params.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;(Integer):&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;value&nbsp;with&nbsp;1&nbsp;being&nbsp;the&nbsp;first.<br>
+@returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;(Float):&nbsp;The&nbsp;peper&nbsp;image&nbsp;value&nbsp;at&nbsp;the&nbsp;given&nbsp;id.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>data</strong> = []</dl>
+
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-generateOpenSimplex"><strong>generateOpenSimplex</strong></a>(seed)</dt><dd><span class="code">Generates&nbsp;an&nbsp;Open&nbsp;Simplex&nbsp;image&nbsp;at&nbsp;seed.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seed&nbsp;(int):&nbsp;Seed&nbsp;of&nbsp;the&nbsp;image</span></dd></dl>
+ <dl><dt><a name="-generateWorley"><strong>generateWorley</strong></a>(seed)</dt><dd><span class="code">Generates&nbsp;a&nbsp;Worley&nbsp;image&nbsp;at&nbsp;seed.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seed&nbsp;(int):&nbsp;Seed&nbsp;of&nbsp;the&nbsp;image</span></dd></dl>
+</td></tr></table>
+</body></html>

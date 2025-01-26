@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="pydoc.css">
+<title>Python: module file_part_parser</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">file_part_parser</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:d%3A%5Cmega%5Cmega%20saves%5Cuniversity%5Cthesis%5Cproject%5Cfile_part_parser.py">d:\mega\mega saves\university\thesis\project\file_part_parser.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="argparse.html">argparse</a><br>
+</td><td class="multicolumn"><a href="os.html">os</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-assemble_file"><strong>assemble_file</strong></a>(path)</dt><dd><span class="code">Assembles&nbsp;the&nbsp;file&nbsp;from&nbsp;.part&lt;id&gt;&nbsp;files.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;(string):&nbsp;The&nbsp;path&nbsp;of&nbsp;the&nbsp;first&nbsp;.part&nbsp;file<br>
+@example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-assemble_file">assemble_file</a>('.\model_8.nn.part1')&nbsp;will&nbsp;result&nbsp;in&nbsp;an&nbsp;assembled&nbsp;file&nbsp;model_8.nn.</span></dd></dl>
+ <dl><dt><a name="-findFiles"><strong>findFiles</strong></a>(in_path)</dt><dd><span class="code">Recursively&nbsp;finds&nbsp;all&nbsp;files&nbsp;that&nbsp;are&nbsp;larger&nbsp;than&nbsp;the&nbsp;&lt;file_size_limit&gt;.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in_path&nbsp;(string):&nbsp;The&nbsp;main&nbsp;directory&nbsp;where&nbsp;to&nbsp;search&nbsp;for&nbsp;the&nbsp;files.</span></dd></dl>
+ <dl><dt><a name="-split_file"><strong>split_file</strong></a>(path)</dt><dd><span class="code">Splits&nbsp;a&nbsp;file&nbsp;into&nbsp;parts&nbsp;matching&nbsp;the&nbsp;&lt;file_size_limit&gt;&nbsp;defined&nbsp;above.<br>
+@params:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;(string):&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;file&nbsp;to&nbsp;be&nbsp;split.<br>
+@example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-split_file">split_file</a>('.\model_8.nn')&nbsp;will&nbsp;result&nbsp;in&nbsp;a&nbsp;set&nbsp;of&nbsp;file&nbsp;ending&nbsp;with&nbsp;.part&lt;id&gt;,&nbsp;like&nbsp;model_8.nn.part1.</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>extension_black_list</strong> = ['png']<br>
+<strong>file_black_list</strong> = ['.git', 'media', '__pycache__', 'images']<br>
+<strong>file_size_limit</strong> = 52428800</td></tr></table>
+</body></html>
